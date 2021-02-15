@@ -38,6 +38,11 @@ end
 
 group :development, :test do
   gem 'pry'
+  gem 'fast_jsonapi'
+  # gem 'kaminari' 
+  # gem 'pager_api'
+  # gem 'active_model_serializers'
+  # gem 'pagy'
 end
 
 group :test do
