@@ -5,10 +5,21 @@ Rails.application.routes.draw do
 
       resources :merchants, module: :merchants, only: [:index, :show] do 
         resources :items, controller: 'items', only: [:index]
+        collection do
+          get '/find', to: 'search#index'
+        end
       end
 
       resources :items, module: :items, only: [:index, :show, :create, :update, :destroy] do 
         resources :merchants, only: [:index]
+        collection do
+          get '/find_all', to: 'search#index'
+        end
+      end
+
+      resources :revenue, only: [:index]
+      namespace :revenue do
+        resources :merchants, only: [:index, :show]
       end
     end
   end
