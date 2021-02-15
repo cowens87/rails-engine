@@ -52,7 +52,7 @@ describe "Merchants API" do
     end
   end
 
-  it "can get one merchant by its id" do
+  it "can get one merchant" do
     id = create(:merchant).id
 
     get "/api/v1/merchants/#{id}"
@@ -72,7 +72,7 @@ describe "Merchants API" do
     item3     = create(:item, merchant_id: merchant1)
 
     get "/api/v1/merchants/#{merchant1}/items"
- 
+
     merchant_items = JSON.parse(response.body, symbolize_names: true)[:data]
 
     expect(response).to be_successful
@@ -87,6 +87,9 @@ describe "Merchants API" do
 
       expect(merchant_item[:attributes]).to have_key(:unit_price)
       expect(merchant_item[:attributes][:unit_price]).to be_a(Numeric)
+
+      expect(merchant_item[:attributes]).to have_key(:merchant_id)
+      expect(merchant_item[:attributes][:merchant_id]).to be_a(Numeric)
     end
   end
 end
