@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Items API' do
   describe 'Item find_all Endpoint Happy Path' do
     it 'can find all items matching name search' do
+      
       create(:item, name: "Fluffy Pillow")
       create(:item, name: 'Fluffy & Stuffy Pillow')
       create(:item, name: 'Over-Fluffy Pillow')

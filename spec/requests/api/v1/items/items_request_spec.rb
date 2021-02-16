@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe "Items API" do
-  describe 'Item CRUD Endpoints' do
-    it "returns all of items" do
+describe "Items API CRUD Endpoints" do
+  describe 'GET /items' do
+    it "can fetch all books" do
       merchant1 = create(:merchant).id
       item1     = create(:item, merchant_id: merchant1)
       item2     = create(:item, merchant_id: merchant1)
@@ -34,8 +34,10 @@ describe "Items API" do
         expect(item[:attributes][:merchant_id]).to be_a(Numeric)
       end
     end
+  end
 
-    it "can get one item" do
+  describe "GET items/:id" do
+    it "can fetch one item" do
       merchant1 = create(:merchant).id
       item1     = create(:item, merchant_id: merchant1).id
 
@@ -57,7 +59,9 @@ describe "Items API" do
       expect(item[:attributes]).to have_key(:merchant_id)
       expect(item[:attributes][:merchant_id]).to be_a(Numeric)
     end
+  end
 
+  describe 'POST /items' do
     it "can create an item" do
       merchant = create(:merchant)
       item_params = {
@@ -73,12 +77,15 @@ describe "Items API" do
       created_item = Item.last
 
       expect(response).to be_successful
+      expect(response).to have_http_status(:created)
       expect(created_item.name).to eq(item_params[:name])
       expect(created_item.description).to eq(item_params[:description])
       expect(created_item.unit_price).to eq(item_params[:unit_price])
       expect(created_item.merchant_id).to eq(item_params[:merchant_id])
-    end
+    end 
+  end
 
+  describe 'PATCH /items/:id' do
     it "can update a item" do
       id = create(:item).id
       previous_name = Item.last.name
@@ -86,13 +93,16 @@ describe "Items API" do
       headers = {"CONTENT_TYPE" => "application/json"}
 
       patch "/api/v1/items/#{id}", headers: headers, params: JSON.generate(item: item_params)
+      
       item = Item.find_by(id: id)
 
       expect(response).to be_successful
       expect(item.name).to_not eq(previous_name)
       expect(item.name).to eq(item_params[:name])
     end
+  end
 
+  describe 'DELETE /books/:id' do
     it "can destroy an item" do
       item = create(:item).id
 
@@ -102,12 +112,13 @@ describe "Items API" do
 
       expect(response).to be_successful
       expect(Item.count).to eq(0)
+      expect(response).to have_http_status(:no_content)
       expect{Item.find(item)}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
-  describe 'Items Merchant Endpoint' do
-    it "can get merchant an item belongs to" do
+  describe "Item's Merchant Endpoint" do
+    it "can fetch the merchant an item belongs to" do
       id = create(:item).id
 
       get "/api/v1/items/#{id}/merchants"
