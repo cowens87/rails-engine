@@ -7,7 +7,11 @@ class Merchant < ApplicationRecord
   has_many :transactions, through: :invoices
   has_many :invoice_items, through: :items
 
-  def total_revenue
-    invoice_items.sum('(invoice_items.quantity * invoice_items.unit_price)')
+  def self.total_revenue
+    joins(invoices: [:invoice_items, :transactions])
+      .where("transactions.result = 'success' AND invoices.status = 'shipped'")
+      .select('merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue')
+      .group(:id)
+      .order('revenue DESC')
   end
 end

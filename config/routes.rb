@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       end
 
       resources :items, module: :items, only: [:index, :show, :create, :update, :destroy] do 
-        resources :merchants, only: [:index]
+        resources :merchant, only: [:index]
         collection do
           get '/find_all', to: 'search#index'
         end

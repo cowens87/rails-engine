@@ -121,7 +121,7 @@ describe "Items API CRUD Endpoints" do
     it "can fetch the merchant an item belongs to" do
       id = create(:item).id
 
-      get "/api/v1/items/#{id}/merchants"
+      get "/api/v1/items/#{id}/merchant"
 
       expect(response).to be_successful
 
@@ -138,6 +138,6 @@ describe "Items API CRUD Endpoints" do
 
       expect(item_merchant[:attributes]).to have_key(:name)
       expect(item_merchant[:attributes][:name]).to be_an(String)
-    end 
-  end
+    end
+  end 
 end

@@ -5,6 +5,7 @@ ruby '2.5.3'
 
 gem 'faraday'
 gem 'figaro'
+gem 'fast_jsonapi'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.5'
@@ -38,7 +39,6 @@ end
 
 group :development, :test do
   gem 'pry'
-  gem 'fast_jsonapi'
   # gem 'kaminari' 
   # gem 'pager_api'
   # gem 'active_model_serializers'

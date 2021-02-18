@@ -23,12 +23,17 @@ class Api::V1::Items::ItemsController < ApplicationController
   end
 
   def update
-    render json: ItemSerializer.new(Item.update(params[:id], item_params))
+    begin
+      item = Item.find(params[:id])
+      item.update!(item_params)
+      render json: ItemSerializer.new(item), status:202    
+    rescue
+      render json: {"error" => {}}, status:404
+    end
   end
 
   def destroy
     Item.find(params[:id]).destroy
-
     head :no_content
   end
 
