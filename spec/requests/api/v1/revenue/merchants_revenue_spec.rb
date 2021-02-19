@@ -26,28 +26,5 @@ describe 'Non-Restful API Revenue Endpoints' do
       expect(revenue[:attributes]).to have_key(:revenue)
       expect(revenue[:attributes][:revenue]).to eq(merch_rev.revenue)
     end
-    
-    it 'can find the top 10 merchants with the most revenue' do
-      get "/api/v1/revenue/merchants?quantity=10"
-    end
   end
-
-  # it "can return all merchants total revenue by date range" do
-  #   merchants = create_list(:merchant, 2, :with_revenue, creation: (DateTime.now - 5.days))
-  #   start_date = Date.today - 7
-  #   end_date = Date.today - 2
-  #   total_revenue_between_dates = merchants.sum(&:revenue).round(2)
-
-  #   get "/api/v1/revenue?start=#{start_date}&end=#{end_date}"
-
-  #   expect(response).to be_successful
-
-  #   revenue = JSON.parse(response.body, symbolize_names: true)[:data]
-
-  #   expect(revenue).to have_key(:id)
-  #   expect(revenue[:id]).to eq(nil)
-
-  #   expect(revenue[:attributes]).to have_key(:revenue)
-  #   expect(revenue[:attributes][:revenue]).to eq(total_revenue_between_dates)
-  # end
 end

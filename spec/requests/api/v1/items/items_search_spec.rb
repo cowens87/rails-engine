@@ -47,7 +47,7 @@ describe 'Items API' do
       get '/api/v1/items/find_all?name=xyd'
 
       expect(response).to be_successful
-      expect(response.status).to eq(204)
+      expect(response.status).to eq(200)
     end
   end
 end

@@ -34,7 +34,7 @@ describe 'Merchants API' do
       get '/api/v1/merchants/find?name=xyz'
 
       expect(response).to be_successful
-      expect(response.status).to eq(204)
+      expect(response.status).to eq(200)
     end
   end
 
@@ -89,6 +89,10 @@ describe 'Merchants API' do
         expect(merchant[:attributes]).to have_key(:count)
         expect(merchant[:attributes][:count]).to be_a(Numeric)
       end
+
+      get "/api/v1/merchants/most_items?"
+
+      expect(response.status).to eq(400)
     end
   end
 end
