@@ -6,14 +6,15 @@ Rails.application.routes.draw do
       resources :merchants, module: :merchants, only: [:index, :show] do 
         resources :items, controller: 'items', only: [:index]
         collection do
-          get '/find', to: 'search#index'
+          get '/find', to: 'search#find'
+          get '/most_items', to: 'search#most_items'
         end
       end
 
       resources :items, module: :items, only: [:index, :show, :create, :update, :destroy] do 
         resources :merchant, only: [:index]
         collection do
-          get '/find_all', to: 'search#index'
+          get '/find_all', to: 'search#find_all'
         end
       end
 

@@ -26,6 +26,10 @@ describe 'Non-Restful API Revenue Endpoints' do
       expect(revenue[:attributes]).to have_key(:revenue)
       expect(revenue[:attributes][:revenue]).to eq(merch_rev.revenue)
     end
+    
+    it 'can find the top 10 merchants with the most revenue' do
+      get "/api/v1/revenue/merchants?quantity=10"
+    end
   end
 
   # it "can return all merchants total revenue by date range" do

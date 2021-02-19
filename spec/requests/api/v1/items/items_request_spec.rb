@@ -34,6 +34,18 @@ describe "Items API CRUD Endpoints" do
         expect(item[:attributes][:merchant_id]).to be_a(Numeric)
       end
     end
+
+    it 'can fetch a large amount of items' do
+      create_list(:item, 100)
+      
+      get '/api/v1/items?per_page=100'
+      
+      expect(response).to be_successful
+    
+      items = JSON.parse(response.body, symbolize_names: true)[:data]
+
+      expect(items.count).to eq(100)
+    end
   end
 
   describe "GET items/:id" do
