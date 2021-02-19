@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Potential Revenue for unshipped items' do
+describe 'Revenue potential for unshipped items' do
   before :each do
     @customer1 = create(:customer)
     @merchant1 = create(:merchant)
@@ -19,9 +19,9 @@ describe 'Potential Revenue for unshipped items' do
     5.times { create(:invoice_item, item: @item2, invoice: @invoice2, quantity: 6, unit_price: 13.50)}
   end
 
-  it 'can calculate the unshipped revenue' do
-
+  it 'can calculate the potential revenue for unshipped orders' do
     get "/api/v1/revenue/unshipped"
+
     expect(response).to be_successful
 
     unshipped = JSON.parse(response.body, symbolize_names: true)[:data]
@@ -38,7 +38,7 @@ describe 'Potential Revenue for unshipped items' do
     end
   end
 
-  it 'can sad path if quantity is not provided' do
+  it 'SAD PATH - unshipped revenue potential no quantity is provided' do
     get "/api/v1/revenue/unshipped?quantity=xyz"
 
     expect(response).to_not be_successful
