@@ -39,14 +39,13 @@ describe 'Items API' do
   end
   
   describe 'Items find_all Endpoint Sad Path' do
-    it 'will return a 204 if there are no name matches' do
+    it 'will return a 200 if there are no name matches' do
       create(:item, name: "Fluffy Pillow")
       create(:item, name: 'Fluffy & Stuffy Pillow')
       create(:item, name: 'Over-Fluffy Pillow')
 
       get '/api/v1/items/find_all?name=xyd'
 
-      expect(response).to be_successful
       expect(response.status).to eq(200)
     end
   end

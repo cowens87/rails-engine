@@ -56,11 +56,15 @@ RSpec.describe Merchant, type: :model do
     end
 
     it 'can find the top merchant by revenue' do
-      expect(Merchant.top_by_revenue(1)[0]).to eq(@merchant2)
+      merchant = Merchant.top_by_revenue(1)
+      expect(merchant[0]).to eq(@merchant2)
+      expect(merchant.size).to eq(1)
     end
 
-    it 'can merchants that sold the most items' do
-      expect(Merchant.most_items_sold(1)).to eq([@merchant2])
+    it 'can find merchants that sold the most items' do
+      merchants = Merchant.most_items_sold(1)
+      expect(merchants).to eq([@merchant2])
+      expect(merchants.size).to eq(1)
     end
   end
 end
