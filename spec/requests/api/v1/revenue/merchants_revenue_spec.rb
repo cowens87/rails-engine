@@ -26,5 +26,25 @@ describe 'Non-Restful API Revenue Endpoints' do
       expect(revenue[:attributes]).to have_key(:revenue)
       expect(revenue[:attributes][:revenue]).to eq(merch_rev.revenue)
     end
+
+    it 'can find top merchants by revenue' do
+      
+      get "/api/v1/revenue/merchants?quantity=10"
+
+      merch_rev  = JSON.parse(response.body, symbolize_names: true)[:data]
+
+      expect(response).to be_successful
+
+      merch_rev.each do |merch|
+        expect(merch).to have_key(:id)
+        expect(merch[:id].to_i).to be_a(Numeric)
+    
+        expect(merch[:attributes]).to have_key(:name)
+        expect(merch[:attributes][:name]).to eq(@merchant1.name)
+
+        expect(merch[:attributes]).to have_key(:revenue)
+        expect(merch[:attributes][:revenue]).to be_a(Numeric)
+      end
+    end
   end
 end
